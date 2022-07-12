@@ -947,6 +947,10 @@ int uv_spawn(uv_loop_t* loop,
   int exec_errorno;
   int i;
 
+  if (options->attribute_list != NULL) {
+      return UV_ENOTSUP;
+  }
+
   assert(options->file != NULL);
   assert(!(options->flags & ~(UV_PROCESS_DETACHED |
                               UV_PROCESS_SETGID |
