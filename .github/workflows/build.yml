@@ -92,7 +92,7 @@ jobs:
           cmake --build build --target clean
           cd build
           rm CMakeCache.txt
-          cmake .. -DBUILD_TESTING=OFF -DCMAKE_SYSTEM_NAME=Android -DCMAKE_ANDROID_API=30 -DCMAKE_C_ANDROID_TOOLCHAIN_PREFIX=clang -DCMAKE_ANDROID_STANDALONE_TOOLCHAIN=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64
+          cmake .. -DBUILD_TESTING=OFF -DCMAKE_SYSTEM_NAME=Android -DCMAKE_ANDROID_API=30 -DANDROID_ARCH=arm64-v8a -DCMAKE_C_ANDROID_TOOLCHAIN_PREFIX=clang -DCMAKE_ANDROID_STANDALONE_TOOLCHAIN=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64
           cd ..
           cmake --build build -j 4
           mv build/libuv.a ./libuv-android30.a
