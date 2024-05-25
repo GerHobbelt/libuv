@@ -89,26 +89,18 @@ jobs:
       - name: Configure and make Android
         run: |
           cmake --build build --target clean
-          (cd build && cmake .. -DBUILD_TESTING=OFF -DCMAKE_SYSTEM_NAME=Android -DCMAKE_ANDROID_API=30)
+          cd build
+          cmake .. -DBUILD_TESTING=OFF -DCMAKE_SYSTEM_NAME=Android -DCMAKE_ANDROID_API=30 -DCMAKE_C_COMPILER=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang
           cmake --build build -j 4
           mv build/libuv.a ./libuv-android30.a
-        env:
-          AR: /usr/local/lib/android/sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ar
-          RANLIB: /usr/local/lib/android/sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-ranlib
-          LD: /usr/local/lib/android/sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang
-          CC: /usr/local/lib/android/sdk/ndk-bundle/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang
 
       - name: Configure and make RPi
         run: |
           cmake --build build --target clean
-          (cd build && cmake .. -DBUILD_TESTING=OFF)
+          cd build
+          cmake .. -DBUILD_TESTING=OFF -DCMAKE_C_COMPILER=/home/runner/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-gcc
           cmake --build build -j 4
           mv build/libuv.a ./libuv-rpi.a
-        env:
-          AR: /home/runner/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-ar
-          RANLIB: /home/runner/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-ranlib
-          LD: /home/runner/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-gcc
-          CC: /home/runner/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-gcc
 
       - name: Upload build output
         uses: actions/upload-artifact@v4
