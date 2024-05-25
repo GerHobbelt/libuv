@@ -88,7 +88,7 @@ jobs:
 
       - name: Configure and make Android
         run: |
-          rm CMakeCache.txt
+          rm build/CMakeCache.txt
           cmake --build build --target clean
           cd build
           cmake .. -DBUILD_TESTING=OFF -DCMAKE_SYSTEM_NAME=Android -DCMAKE_ANDROID_API=30 -DCMAKE_SYSROOT=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/sysroot -DCMAKE_C_COMPILER=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang
@@ -98,7 +98,7 @@ jobs:
 
       - name: Configure and make RPi
         run: |
-          rm CMakeCache.txt
+          rm build/CMakeCache.txt
           cmake --build build --target clean
           cd build
           cmake .. -DBUILD_TESTING=OFF -DCMAKE_SYSROOT=/home/runner/arm-rpi-linux-gnueabihf/sysroot -DCMAKE_C_COMPILER=/home/runner/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-gcc
