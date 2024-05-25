@@ -88,18 +88,20 @@ jobs:
 
       - name: Configure and make Android
         run: |
+          rm CMakeCache.txt
           cmake --build build --target clean
           cd build
-          cmake .. -DBUILD_TESTING=OFF -DCMAKE_SYSTEM_NAME=Android -DCMAKE_ANDROID_API=30 -DCMAKE_FIND_ROOT_PATH=$ANDROID_NDK_ROOT -DCMAKE_C_COMPILER=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang
+          cmake .. -DBUILD_TESTING=OFF -DCMAKE_SYSTEM_NAME=Android -DCMAKE_ANDROID_API=30 -DCMAKE_SYSROOT=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/sysroot -DCMAKE_C_COMPILER=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android30-clang
           cd ..
           cmake --build build -j 4
           mv build/libuv.a ./libuv-android30.a
 
       - name: Configure and make RPi
         run: |
+          rm CMakeCache.txt
           cmake --build build --target clean
           cd build
-          cmake .. -DBUILD_TESTING=OFF -DCMAKE_FIND_ROOT_PATH=/home/runner/arm-rpi-linux-gnueabihf -DCMAKE_C_COMPILER=/home/runner/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-gcc
+          cmake .. -DBUILD_TESTING=OFF -DCMAKE_SYSROOT=/home/runner/arm-rpi-linux-gnueabihf/sysroot -DCMAKE_C_COMPILER=/home/runner/arm-rpi-linux-gnueabihf/bin/arm-rpi-linux-gnueabihf-gcc
           cd ..
           cmake --build build -j 4
           mv build/libuv.a ./libuv-rpi.a
